@@ -629,6 +629,9 @@ footer p a {
     .language-selector {
         bottom: -3rem;
     }
+    .preview-container {
+        flex-direction: column;
+    }
 }
 
 @keyframes shine {
