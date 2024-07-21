@@ -1,0 +1,13 @@
+{
+    "alert": "A new version upcoming soon!",
+    "title": "Image Format Converter",
+    "description": "ConvrtIt is an online image format converter. We support a wide range of image formats including JPEG, PNG, GIF, BMP, TIFF, and more. To get started, use the button below and select image files to convert from your computer.",
+    "language": "Language",
+    "selectFile": "SELECT FILE",
+    "convertTo": "CONVERT TO",
+    "convertBtn": "Convert",
+    "preview": "Preview",
+    "info": "If your download don’t be start automatically, click on the download button bellow.",
+    "copied": "Copied!",
+    "author": "Maded with 💙 by"
+}

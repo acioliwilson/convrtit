@@ -4,14 +4,14 @@
             <div class="main-header appear">
                 <router-link class="brand baloo" to="/">Convrt<span>It</span></router-link>
                 <div class="alert appear">
-                    <span>A new version upcoming soon!</span>
+                    <span>{{ t('alert') }}</span>
                     <i class="bi bi-info-circle-fill"></i>
                 </div>
             </div>
             <section class="presentation">
                 <div class="text">
-                    <h1 class="appear">Image Format Converter</h1>
-                    <p class="appear">ConvrtIt is an online image format converter. We support a wide range of image formats including JPEG, PNG, GIF, BMP, TIFF, and more. To get started, use the button below and select image files to convert from your computer.</p>
+                    <h1 class="appear">{{ t('title') }}</h1>
+                    <p class="appear">{{ t('description') }}</p>
                     <img src="@/assets/v2/arrow.svg" class="arrow">
                 </div>
                 <div class="animation appear">
@@ -34,8 +34,8 @@
                     </div>
                 </div>
             </section>
-            <div class="language-selector appear">
-                <select>
+            <div class="language-selector">
+                <select v-model="selectedLanguage" @change="changeLanguage">
                     <option value="en">
                         EN
                     </option>
@@ -43,7 +43,7 @@
                         PT
                     </option>
                 </select>
-                <label class="label">Language</label>
+                <label class="label">{{ t('language') }}</label>
             </div>
         </div>
         <img src="@/assets/v2/shape.svg" class="shape" />
@@ -54,26 +54,26 @@
                 <input type="file" id="inputFile" @change="handleFileUpload">
                 <label for="inputFile" class="upload-btn appear">
                     <i class="bi bi-cloud-arrow-up"></i>
-                    <span>SELECT FILE</span>
+                    <span>{{ t('selectFile') }}</span>
                 </label>
-                <span class="convert-label appear">CONVERT TO</span>
+                <span class="convert-label appear">{{ t('convertTo') }}</span>
                 <select class="appear" v-model="imageType">
                     <option value="png">PNG</option>
                     <option value="webp">WEBP</option>
                     <option value="svg">SVG</option>
                 </select>
-                <button class="btn-convert" @click="convertImage">Convert</button>
+                <button class="btn-convert" @click="convertImage">{{ t('convertBtn') }}</button>
             </div>
             <div class="preview-container" v-if="outputImage">
                 <div class="preview">
-                    <span class="appear">Preview</span>
+                    <span class="appear">{{ t('preview') }}</span>
                     <figure class="appear">
                         <img :src="outputImage" alt="Converted Image" />
                     </figure>
                 </div>
                 <div class="info">
                     <p class="appear">
-                        If your download don’t be start automatically, click on the download button bellow.
+                        {{ t('info') }}
                     </p>
                     <a :href="outputImage" download="converted-image" class="appear">Download</a>
                 </div>
@@ -99,21 +99,33 @@
         </div>
     </section>
     <footer class="appear">
-        <p>Maded with 💙 by <a href="https://github.com/acioliwilson" target="_blank" rel="noopener" class="github"><i class="bi bi-github"></i> acioliwilson</a></p>
+        <p>{{ t('author') }} <a href="https://github.com/acioliwilson" target="_blank" rel="noopener" class="github"><i class="bi bi-github"></i> acioliwilson</a></p>
     </footer>
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import {
     saveAs
 } from 'file-saver';
 
 export default {
+    setup() {
+        const { t, locale } = useI18n();
+        const selectedLanguage = ref(locale.value);
+
+        const changeLanguage = () => {
+        locale.value = selectedLanguage.value;
+        };
+
+        return { t, selectedLanguage, changeLanguage };
+    },
     data() {
         return {
             inputImage: null,
             outputImage: null,
-            imageType: 'png', // pode ser 'png', 'webp', 'svg'
+            imageType: 'png',
         };
     },
     methods: {
@@ -174,7 +186,7 @@ export default {
 <style scoped lang="css">
 header {
     width: 100%;
-    min-height: 300px;
+    min-height: 350px;
     background: var(--primary-color);
     display: flex;
     flex-direction: column;
@@ -429,7 +441,7 @@ img.shape {
 .language-selector {
     position: absolute;
     right: 10px;
-    bottom: -45px;
+    bottom: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -448,6 +460,8 @@ img.shape {
     color: #FFF;
     z-index: 4;
     outline: none;
+    position: absolute;
+    bottom: 0;
     transition: .3s ease all;
 }
 
